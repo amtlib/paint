@@ -66,3 +66,11 @@ $(window).resize(function () {
     canvas.setAttribute('height', $(window).height() - 36);
     redraw();
 });
+$('#clear').click(function () {
+    clickX = new Array();
+    clickY = new Array();
+    clickDrag = new Array();
+    clickColor = new Array();
+    clickSize = new Array();
+    redraw();
+});
