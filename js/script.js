@@ -7,6 +7,12 @@ canvas.setAttribute('height', $(window).height()-5);
 var context = canvas.getContext('2d');
 var paint;
 
+function addClick(x, y, dragging) {
+    clickX.push(x);
+    clickY.push(y);
+    clickDrag.push(dragging);
+}
+
 
 $('#canvas').mousedown(function (e) {
     var mouseX = e.pageX - this.offsetLeft;
