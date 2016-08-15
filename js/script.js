@@ -1,21 +1,25 @@
 var clickX = new Array();
 var clickY = new Array();
 var clickDrag = new Array();
+var clickColor = new Array();
 var canvas = document.getElementById('canvas');
 canvas.setAttribute('width', $(window).width());
 canvas.setAttribute('height', $(window).height()-5);
 var context = canvas.getContext('2d');
 var paint;
 
+var currentColor = '#000'; //sample color - black
+
+
 function addClick(x, y, dragging) {
     clickX.push(x);
     clickY.push(y);
     clickDrag.push(dragging);
+    clickColor.push(currentColor);
 }
 
 function redraw() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); //Clear canvas
-    context.strokeStyle = "#df4b26";
     context.lineJoin = "round"; //Connections are smooth
     context.lineWidth = 15;
     for (var i = 0; i < clickX.length; i++) {
@@ -28,6 +32,7 @@ function redraw() {
         }
         context.lineTo(clickX[i], clickY[i]);
         context.closePath();
+        context.strokeStyle = clickColor[i];
         context.stroke();
     }
 }
@@ -44,9 +49,13 @@ $('#canvas').mousemove(function (e) {
         redraw();
     }
 });
-$('canvas').mouseup(function () {
+$('#canvas').mouseup(function () {
     paint = false;
 });
-$('canvas').mouseleave(function () {
+$('#canvas').mouseleave(function () {
     paint = false;
+});
+
+$('#color').change(function(){
+    currentColor = $('#color').val();
 });
