@@ -4,13 +4,10 @@ var clickDrag = new Array();
 var clickColor = new Array();
 var canvas = document.getElementById('canvas');
 canvas.setAttribute('width', $(window).width());
-canvas.setAttribute('height', $(window).height()-5);
+canvas.setAttribute('height', $(window).height() - 5);
 var context = canvas.getContext('2d');
 var paint;
-
 var currentColor = '#000'; //sample color - black
-
-
 function addClick(x, y, dragging) {
     clickX.push(x);
     clickY.push(y);
@@ -55,7 +52,6 @@ $('#canvas').mouseup(function () {
 $('#canvas').mouseleave(function () {
     paint = false;
 });
-
-$('#color').change(function(){
+$('#color').change(function () {
     currentColor = $('#color').val();
 });
