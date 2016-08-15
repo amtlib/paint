@@ -74,3 +74,19 @@ $('#clear').click(function () {
     clickSize = new Array();
     redraw();
 });
+$('#undo').click(function () {
+    var count = 0;
+    for (var i = 0; clickDrag[clickDrag.length - 1 - i]; i++) {
+        clickX.pop();
+        clickY.pop();
+        clickDrag.pop();
+        clickColor.pop();
+        clickSize.pop();
+    }
+    clickX.pop();
+        clickY.pop();
+        clickDrag.pop();
+        clickColor.pop();
+        clickSize.pop();
+    redraw();
+});
