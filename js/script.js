@@ -3,6 +3,8 @@ var clickY = new Array();
 var clickDrag = new Array();
 var clickColor = new Array();
 var clickSize = new Array();
+var undoArray = new Array();
+var undoCounter = 0;
 var canvas = document.getElementById('canvas');
 canvas.setAttribute('width', $(window).width() - 2); //initial canvas width
 canvas.setAttribute('height', $(window).height() - 36); //initial canvas height
@@ -40,6 +42,7 @@ $('#canvas').mousedown(function (e) {
     var mouseX = e.pageX - this.offsetLeft;
     var mouseY = e.pageY - this.offsetTop;
     paint = true;
+    undoCounter++;
     addClick(mouseX, mouseY);
     redraw();
 });
@@ -48,12 +51,17 @@ $('#canvas').mousemove(function (e) {
         addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
         redraw();
     }
+    undoCounter++;
 });
 $('#canvas').mouseup(function () {
     paint = false;
+    undoArray.push(undoCounter);
+    undoCounter = 0;
 });
 $('#canvas').mouseleave(function () {
     paint = false;
+    undoArray.push(undoCounter);
+    undoCounter = 0;
 });
 $('#color').change(function () {
     currentColor = $('#color').val();
@@ -75,18 +83,14 @@ $('#clear').click(function () {
     redraw();
 });
 $('#undo').click(function () {
-    var count = 0;
-    for (var i = 0; clickDrag[clickDrag.length - 1 - i]; i++) {
+    var moves_to_undo = undoArray.pop();
+    while (moves_to_undo !== 0) {
         clickX.pop();
         clickY.pop();
         clickDrag.pop();
         clickColor.pop();
         clickSize.pop();
+        moves_to_undo--;
     }
-    clickX.pop();
-        clickY.pop();
-        clickDrag.pop();
-        clickColor.pop();
-        clickSize.pop();
     redraw();
 });
