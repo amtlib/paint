@@ -21,7 +21,7 @@ $(document).ready(function () {
         clickSize.push(currentSize);
     }
 
-    function redraw() {
+    function redraw()  {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); //Clear canvas
         context.lineJoin = "round"; //Connections are smooth
         for (var i = 0; i < clickX.length; i++) {
