@@ -21,7 +21,7 @@ $(document).ready(function () {
         clickSize.push(currentSize);
     }
 
-    function redraw()  {
+    function redraw() {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height); //Clear canvas
         context.lineJoin = "round"; //Connections are smooth
         for (var i = 0; i < clickX.length; i++) {
@@ -39,34 +39,38 @@ $(document).ready(function () {
             context.stroke();
         }
     }
-
     canvas.mousedown(function (e) {
+        console.log('mousedown');
         var mouseX = e.pageX - this.offsetLeft;
         var mouseY = e.pageY - this.offsetTop;
         paint = true;
-        undoCounter++;
+        undoCounter = 1;
         addClick(mouseX, mouseY);
         redraw();
     });
     canvas.mousemove(function (e) {
         if (paint) {
+            console.log('mousemove');
             addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
             undoCounter++;
             redraw();
         }
     });
     canvas.mouseup(function () {
+        console.log('mouseup');
         paint = false;
-        undoArray.push(undoCounter);
-        undoCounter = 0;
+        if (undoCounter > 0) {
+            undoArray.push(undoCounter);
+            undoCounter = 0;
+        }
     });
     canvas.mouseleave(function () {
-        if(paint){
-            undoCounter--;
+        console.log('mouseleave');
+        if (undoCounter > 0) {
+            undoArray.push(undoCounter);
+            undoCounter = 0;
         }
         paint = false;
-        undoArray.push(undoCounter);
-
     });
     $('#color').change(function () {
         currentColor = $('#color').val();
@@ -99,5 +103,5 @@ $(document).ready(function () {
         }
         redraw();
     });
-
+    $('#utils').draggable();
 });
